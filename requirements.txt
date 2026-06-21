@@ -1,0 +1,13 @@
+chromadb==0.4.24
+sentence-transformers==2.5.1
+pyperclip==1.8.2
+ollama==0.1.7
+rich==13.7.1
+fastapi==0.110.1
+uvicorn==0.29.0
+watchdog==4.0.0
+pywebview==5.2
+pyinstaller==6.6.0
+beautifulsoup4==4.12.3
+requests==2.31.0
+pypdf==4.1.0
