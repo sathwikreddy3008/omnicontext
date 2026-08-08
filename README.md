@@ -2,7 +2,24 @@
 
 > **Local-first. Privacy-preserving. Retrieval-grounded.**
 
-OmniContext is a local AI context engine that continuously ingests files, PDFs, web content, and clipboard activity, enriches them with metadata, stores them in a semantic vector database, and provides retrieval-grounded answers through a local LLM — with full source citations and confidence scoring.
+OmniContext is an AI-native context engine that continuously ingests **code repositories, documents, PDFs, web content, and clipboard activity**, enriches them with structured metadata, stores semantic embeddings in a local **ChromaDB-backed context store**, and provides **retrieval-grounded, citation-backed answers** through a local LLM with confidence-aware validation.
+
+### ✨ Highlights
+
+- 🧠 Hybrid retrieval (semantic + keyword + metadata filters)
+- 🏷️ Automatic metadata enrichment and technology tagging
+- 🔗 Source provenance and related-context discovery
+- 🛡️ Confidence-aware grounded responses with citations
+- 📈 Built-in telemetry and observability for AI workflows
+- 🧰 Agent-compatible tool interfaces designed for future MCP integration
+
+## 🚀 Quick Start
+
+```bash
+ollama pull phi3
+pip install -r requirements.txt
+python cli.py serve
+```
 
 ---
 
@@ -13,6 +30,31 @@ https://github.com/user-attachments/assets/d9484c20-efda-4cba-b238-1e4101370636
 2. **Hybrid Context Explorer**: Search across the Vector DB combining semantic + keyword search with exact relevance scores.
 3. **Retrieval-Grounded Chat**: Ask complex questions. The local LLM streams answers using only the retrieved context.
 4. **Verifiable Citations**: Every answer includes a Confidence Badge and precise source citations. Click any citation to view the exact code chunk.
+
+---
+
+## 📸 Screenshots
+
+### 🔍 Hybrid Context Explorer
+Semantic + keyword + metadata search with relevance scoring and provenance tracking.
+
+<img width="2240" height="1400" alt="Screenshot 2026-08-08 094726" src="https://github.com/user-attachments/assets/e5db7701-3375-4e29-a840-d8c0ca9e154b" />
+
+---
+
+### 💬 Retrieval-Grounded Chat
+Local LLM responses with confidence scoring and source citations.
+
+<img width="2240" height="1400" alt="Screenshot 2026-08-08 094831" src="https://github.com/user-attachments/assets/b005b4e3-7e76-491d-a8bc-2a0e462cfda5" />
+
+---
+
+### 🔗 Related Context Discovery
+Navigate semantically related chunks and trace answer provenance.
+
+<img width="2240" height="1400" alt="Screenshot 2026-08-08 094850" src="https://github.com/user-attachments/assets/75f4b955-2aa8-4db0-b27c-c6bcf8b566b5" />
+
+---
 
 ## 🏗️ Architecture
 
@@ -280,6 +322,7 @@ Planned MCP additions:
 
 ---
 
+
 ## ⚡ Benchmarks
 
 | Metric | Result |
@@ -307,6 +350,16 @@ Planned MCP additions:
 | Desktop | pywebview + pystray + pynput |
 | CLI | Rich |
 | Metadata | Pydantic v2 |
+
+---
+
+## 🎯 Example Use Cases
+
+- **Codebase intelligence** — ask architectural questions about a repository.
+- **Developer memory** — retrieve previously copied snippets, notes, or docs.
+- **Research assistant** — search PDFs and web articles semantically.
+- **AI agent context provider** — expose retrieval tools through the `tools/` interface.
+- **Knowledge provenance explorer** — trace answers back to the exact source chunks used during generation.
 
 ---
 
