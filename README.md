@@ -6,7 +6,7 @@ OmniContext is a local AI context engine that continuously ingests files, PDFs, 
 
 ---
 
-![OmniContext Demo](demo.webp)
+![OmniContext Demo](demo.png)
 
 ## 🏗️ Architecture
 
