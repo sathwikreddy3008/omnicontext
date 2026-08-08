@@ -6,7 +6,13 @@ OmniContext is a local AI context engine that continuously ingests files, PDFs, 
 
 ---
 
-![OmniContext Demo](demo.png)
+https://github.com/user-attachments/assets/d9484c20-efda-4cba-b238-1e4101370636
+
+### 🎥 Demo Walkthrough
+1. **Instant Ingestion**: OmniContext instantly indexes the files, chunks them semantically, and auto-tags them with rich metadata.
+2. **Hybrid Context Explorer**: Search across the Vector DB combining semantic + keyword search with exact relevance scores.
+3. **Retrieval-Grounded Chat**: Ask complex questions. The local LLM streams answers using only the retrieved context.
+4. **Verifiable Citations**: Every answer includes a Confidence Badge and precise source citations. Click any citation to view the exact code chunk.
 
 ## 🏗️ Architecture
 
