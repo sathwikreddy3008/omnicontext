@@ -3,44 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Second Brain</title>
+    <title>OmniContext — AI-Native Context & Memory Platform</title>
+    <meta name="description" content="Local-first, privacy-preserving AI context engine for retrieval-grounded answers.">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <div class="app-container">
         <!-- Sidebar -->
         <aside class="sidebar glass-panel">
             <div class="logo">
-                <span class="logo-icon">🧠</span>
-                <h1>Second Brain</h1>
+                <i data-lucide="zap" class="logo-icon"></i>
+                <div>
+                    <h1>OmniContext</h1>
+                    <p class="logo-sub">AI-Native Context Engine</p>
+                </div>
             </div>
-            
+
             <div class="stats-card">
-                <h3>Brain Capacity</h3>
+                <h3>Context Capacity</h3>
                 <div class="stat-value" id="memory-count">...</div>
-                <p class="stat-label">Vector Chunks Memorized</p>
+                <p class="stat-label">Vector Chunks Indexed</p>
             </div>
 
             <!-- Tab Navigation -->
             <nav class="nav-tabs">
-                <button class="nav-tab active" data-tab="chat">💬 Chat</button>
-                <button class="nav-tab" data-tab="memories">📚 Memories</button>
+                <button class="nav-tab active" data-tab="chat" id="tab-chat"><i data-lucide="message-square" class="icon-sm"></i> Chat</button>
+                <button class="nav-tab" data-tab="memories" id="tab-memories"><i data-lucide="database" class="icon-sm"></i> Memories</button>
+                <button class="nav-tab" data-tab="explorer" id="tab-explorer"><i data-lucide="compass" class="icon-sm"></i> Explorer</button>
             </nav>
 
             <div class="control-panel">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                     <h3>Ingestion</h3>
                     <select id="ingest-type" class="ingest-select">
-                        <option value="folder">📁 Folder</option>
-                        <option value="url">🌐 URL</option>
-                        <option value="pdf">📄 PDF</option>
+                        <option value="folder">Folder</option>
+                        <option value="url">URL</option>
+                        <option value="pdf">PDF</option>
                     </select>
                 </div>
-                
+
                 <!-- Folder Input -->
                 <div id="ingest-folder-group" class="input-group">
                     <input type="text" id="ingest-path" value="." placeholder="Enter directory path">
@@ -60,48 +66,47 @@
                 </div>
 
                 <div id="ingest-status" class="status-msg"></div>
-                
+
                 <button id="clear-chat-btn" class="secondary-btn">Clear Chat</button>
                 <button id="clear-btn" class="danger-btn">Wipe Memory</button>
             </div>
         </aside>
 
-        <!-- Main Content Wrapper (holds both views in the same grid cell) -->
+        <!-- Main Content -->
         <div class="main-content">
             <!-- Chat View -->
             <div class="chat-area glass-panel" id="chat-view">
                 <div class="chat-history" id="chat-history">
                     <div class="message system">
-                        <div class="avatar">🧠</div>
-                        <div class="bubble">Hello! I am your local Second Brain. I have memorized your codebase. What would you like to know?</div>
+                        <div class="avatar"><i data-lucide="zap" class="icon-md"></i></div>
+                        <div class="bubble">Hello! I am <strong>OmniContext</strong> — your local AI context engine. I have indexed your codebase and am ready to answer questions with source citations. What would you like to know?</div>
                     </div>
                 </div>
-                
+
                 <div class="input-area">
-                    <input type="text" id="query-input" placeholder="Ask your brain anything..." autocomplete="off">
+                    <input type="text" id="query-input" placeholder="Ask OmniContext anything..." autocomplete="off">
                     <button id="stop-btn" class="send-btn hidden" style="background: var(--danger-color); margin-right: 8px;" title="Stop Generating">
-                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12"></rect></svg>
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="currentColor"><rect x="6" y="6" width="12" height="12"></rect></svg>
                     </button>
                     <button id="ask-btn" class="send-btn">
-                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     </button>
                 </div>
             </div>
-            
-            <!-- Memory Browser View (hidden by default) -->
+
+            <!-- Memory Browser View -->
             <div class="memory-browser glass-panel hidden" id="memories-view">
-                <!-- Search bar -->
                 <div class="memory-toolbar">
                     <div class="memory-search-group">
-                        <input type="text" id="memory-search" placeholder="🔍 Search memories...">
+                        <input type="text" id="memory-search" placeholder="Search memories...">
                         <button id="memory-search-btn" class="primary-btn">Search</button>
-                        <button id="memory-refresh-btn" class="secondary-btn" style="width: auto;" title="Show all">↻</button>
+                        <button id="memory-refresh-btn" class="secondary-btn" style="width: auto; display: flex; align-items: center; justify-content: center;" title="Show all"><i data-lucide="refresh-cw" class="icon-sm"></i></button>
                     </div>
                 </div>
 
                 <!-- Add Note -->
                 <div class="add-note-area">
-                    <textarea id="note-input" placeholder="✍️ Add a manual note or thought to your brain..." rows="2"></textarea>
+                    <textarea id="note-input" placeholder="Add a manual note or thought..." rows="2"></textarea>
                     <button id="add-note-btn" class="primary-btn">Save Note</button>
                 </div>
                 <div id="note-status" class="status-msg" style="padding: 0 20px;"></div>
@@ -111,12 +116,52 @@
                     <p class="empty-state">Click "↻" to load your memories.</p>
                 </div>
             </div>
+
+            <!-- Context Explorer View -->
+            <div class="explorer-panel glass-panel hidden" id="explorer-view">
+                <!-- Explorer Toolbar -->
+                <div class="explorer-toolbar">
+                    <div class="explorer-search-row">
+                        <input type="text" id="explorer-query" placeholder="Explore context... (e.g. kafka, fastapi, vector search)">
+                        <button id="explorer-search-btn" class="primary-btn">Search</button>
+                    </div>
+                    <div class="explorer-filters">
+                        <select id="filter-source-type" class="filter-select">
+                            <option value="">All Source Types</option>
+                            <option value="code">Code</option>
+                            <option value="pdf">PDF</option>
+                            <option value="web">Web</option>
+                            <option value="clipboard">Clipboard</option>
+                            <option value="note">Note</option>
+                        </select>
+                        <select id="filter-project" class="filter-select">
+                            <option value="">All Projects</option>
+                        </select>
+                        <div id="filter-tags" class="tag-chips"></div>
+                    </div>
+                </div>
+
+                <div class="explorer-results" id="explorer-results">
+                    <p class="empty-state">Enter a query to explore your context store.</p>
+                </div>
+            </div>
         </div>
 
-        <!-- Context Panel (Right side) -->
+        <!-- Right Panel: Context + Citations -->
         <aside class="context-panel glass-panel">
-            <h3>Retrieved Context</h3>
-            <p class="context-subtitle">Raw data retrieved from the vector database.</p>
+            <div class="context-panel-header">
+                <h3>Retrieved Context</h3>
+                <span id="confidence-badge" class="confidence-badge hidden"></span>
+            </div>
+            <p class="context-subtitle">Source-grounded evidence from the vector store.</p>
+
+            <!-- Source Citations -->
+            <div id="citations-panel" class="citations-panel hidden">
+                <h4 class="citations-title">Source Citations</h4>
+                <div id="citations-list" class="citations-list"></div>
+            </div>
+
+            <!-- Raw Context -->
             <div class="context-content" id="context-content">
                 <p class="empty-state">No context retrieved yet.</p>
             </div>

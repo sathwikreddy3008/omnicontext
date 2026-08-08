@@ -35,7 +35,7 @@ def show_window(icon, item):
         is_hidden = False
 
 def quit_app(icon, item):
-    console.print("\n[yellow]Shutting down Second Brain...[/yellow]")
+    console.print("\n[yellow]Shutting down OmniContext...[/yellow]")
     if tray_icon:
         tray_icon.stop()
     if watcher:
@@ -58,10 +58,10 @@ def toggle_window():
 def setup_tray():
     global tray_icon
     menu = pystray.Menu(
-        item('Open Second Brain', show_window, default=True),
+        item('Open OmniContext', show_window, default=True),
         item('Quit', quit_app)
     )
-    tray_icon = pystray.Icon("second_brain", create_tray_image(), "Second Brain", menu)
+    tray_icon = pystray.Icon("omnicontext", create_tray_image(), "OmniContext", menu)
     tray_icon.run()
 
 def setup_hotkeys():
@@ -97,12 +97,12 @@ def launch_desktop_app():
     # Wait a moment for the server to spin up
     time.sleep(1.5)
 
-    console.print("\n[bold cyan]Starting Second Brain...[/bold cyan]")
+    console.print("\n[bold cyan]>>> Starting OmniContext...[/bold cyan]")
     console.print("[green]System Tray mode active! Minimize to hide, or use Ctrl+Alt+Space to toggle.[/green]")
     
     # Create the native window
     app_window = webview.create_window(
-        title="Second Brain",
+        title="OmniContext — AI-Native Context & Memory Platform",
         url="http://127.0.0.1:8000",
         width=1200,
         height=800,

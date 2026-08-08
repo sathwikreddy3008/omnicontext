@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  omnicontext:
+    build: .
+    container_name: omnicontext
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persist ChromaDB and model cache outside the container
+      - omnicontext-data:/root/.omnicontext
+      # Mount a local directory to ingest (optional)
+      # - ./my-projects:/workspace:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/stats"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  omnicontext-data:
+    name: omnicontext-data

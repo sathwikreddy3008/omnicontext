@@ -19,10 +19,10 @@ console = Console()
 
 def print_banner():
     banner = """
-    🧠 [bold blue]Second Brain[/bold blue] 
-    [dim]Your Private, Local-First AI Memory Engine[/dim]
+    [bold cyan]>>> OmniContext <<<[/bold cyan] [dim]-- AI-Native Context & Memory Platform[/dim]
+    [dim]Local-first . Privacy-preserving . Retrieval-grounded[/dim]
     """
-    console.print(Panel(banner, border_style="blue", expand=False))
+    console.print(Panel(banner, border_style="cyan", expand=False))
 
 def start_daemon():
     print_banner()
@@ -50,8 +50,8 @@ def start_daemon():
 
 def run_server():
     print_banner()
-    console.print("[bold cyan]Starting Second Brain Web Server...[/bold cyan]")
-    console.print("🌐 UI available at: [bold green]http://localhost:8000[/bold green]")
+    console.print("[bold cyan]Starting OmniContext Web Server...[/bold cyan]")
+    console.print("UI available at: [bold green]http://localhost:8000[/bold green]")
     
     # Start live directory watcher in background
     watcher = LiveWatcher(".")
@@ -66,7 +66,7 @@ def run_server():
         watcher.stop()
 
 def query_brain(query_text: str):
-    console.print(f"🤔 [bold]Searching memory for:[/bold] '{query_text}'...")
+    console.print(f"[bold]Searching memory for:[/bold] '{query_text}'...")
     
     store = MemoryStore()
     context = store.search_memories(query_text)
@@ -77,11 +77,16 @@ def query_brain(query_text: str):
 
     console.print(Panel(context, title="Retrieved Context", border_style="dim", expand=False))
     
-    console.print("🤖 [bold]Asking local LLM...[/bold]")
+    console.print("[bold]Asking local LLM...[/bold]")
     engine = BrainEngine()
-    answer = engine.ask(query_text, context)
+    result = engine.ask(query_text, context)
+    answer = result["answer"] if isinstance(result, dict) else result
+    confidence = result.get("confidence", None) if isinstance(result, dict) else None
     
-    console.print(Panel(Markdown(answer), title="Second Brain Output", border_style="green", expand=False))
+    title = f"OmniContext Output"
+    if confidence is not None:
+        title += f" [dim](confidence: {confidence:.0%})[/dim]"
+    console.print(Panel(Markdown(answer), title=title, border_style="green", expand=False))
 
 def ingest_path(path: str):
     store = MemoryStore()
@@ -91,21 +96,25 @@ def ingest_path(path: str):
 def print_stats():
     store = MemoryStore()
     count = store.get_count()
-    console.print(f"\n🧠 [bold blue]Brain Statistics[/bold blue]")
+    console.print(f"\n[bold cyan]OmniContext Statistics[/bold cyan]")
     console.print(f"Total memories (chunks) stored: [bold green]{count}[/bold green]\n")
 
 def clear_brain():
-    console.print("[bold red]Warning:[/bold red] This will permanently delete all memories.")
+    console.print("[bold red]Warning:[/bold red] This will permanently delete all OmniContext memories.")
     confirm = console.input("Are you sure? (y/N): ")
     if confirm.lower() == 'y':
         store = MemoryStore()
         store.clear_collection()
-        console.print("[bold green]Brain cleared successfully.[/bold green]")
+        console.print("[bold green]OmniContext memory cleared successfully.[/bold green]")
     else:
         console.print("Aborted.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="OmniContext Second Brain CLI")
+    parser = argparse.ArgumentParser(
+        description="OmniContext — AI-Native Context & Memory Platform CLI",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="  Example: python cli.py serve\n  Example: python cli.py ask 'what is kafka?'"
+    )
     subparsers = parser.add_subparsers(dest="command", help="Commands")
 
     # Command: listen
